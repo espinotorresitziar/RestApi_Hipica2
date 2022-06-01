@@ -98,13 +98,17 @@ class DatoRoutes {
         this.getDoma = (req, res) => __awaiter(this, void 0, void 0, function* () {
             yield database_1.db.conectarBD()
                 .then(() => __awaiter(this, void 0, void 0, function* () {
-                const doma = yield participantes_1.Participantes.aggregate([
+                const doma = yield participantes_1.Participantes.find(
+                /*[
                     {
                         $match: {
-                            "_modalidad": 'Doma'
+                            "_modalidad": 'doma'
                         }
                     }
-                ]);
+                ]*/
+                {
+                    "_modalidad": "Doma"
+                });
                 res.json(doma);
             }))
                 .catch((mensaje) => {

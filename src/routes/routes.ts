@@ -108,14 +108,17 @@ class DatoRoutes {
     private getDoma = async (req: Request, res: Response) => {
         await db.conectarBD()
         .then(async () => {
-            const doma = await Participantes.aggregate(
-                [
+            const doma = await Participantes.find(
+                /*[
                     {
                         $match: {
-                            "_modalidad": 'Doma'
+                            "_modalidad": 'doma'
                         }
                     }
-                ]
+                ]*/
+                {
+                    "_modalidad": "Doma"
+                }
             )
             res.json(doma)
         })
