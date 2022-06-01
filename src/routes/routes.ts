@@ -109,18 +109,43 @@ class DatoRoutes {
         await db.conectarBD()
         .then(async () => {
             const doma = await Participantes.find(
-                /*[
-                    {
-                        $match: {
-                            "_modalidad": 'doma'
-                        }
-                    }
-                ]*/
                 {
                     "_modalidad": "Doma"
                 }
             )
             res.json(doma)
+        })
+        .catch((mensaje) => {
+            res.send(mensaje)
+        })
+        await db.desconectarBD()
+    }
+
+    private getSalto = async (req: Request, res: Response) => {
+        await db.conectarBD()
+        .then(async () => {
+            const salto = await Participantes.find(
+                {
+                    "_modalidad": "Salto"
+                }
+            )
+            res.json(salto)
+        })
+        .catch((mensaje) => {
+            res.send(mensaje)
+        })
+        await db.desconectarBD()
+    }
+
+    private getCross = async (req: Request, res: Response) => {
+        await db.conectarBD()
+        .then(async () => {
+            const cross = await Participantes.find(
+                {
+                    "_modalidad": "Cross"
+                }
+            )
+            res.json(cross)
         })
         .catch((mensaje) => {
             res.send(mensaje)
@@ -296,6 +321,8 @@ class DatoRoutes {
         this._router.get('/niveles/:tipoNivel', this.getNivel)
         this._router.get('/participante/:nombre', this.getParticipante)
         this._router.get('/doma', this.getDoma)
+        this._router.get('/salto', this.getSalto)
+        this._router.get('/cross', this.getCross)
         this._router.post('/nivel', this.newNivel)
         this._router.post('/participante', this.newParticipante)
         this._router.put('/modificarNivel/:id', this.modiNivel)

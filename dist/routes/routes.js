@@ -98,18 +98,36 @@ class DatoRoutes {
         this.getDoma = (req, res) => __awaiter(this, void 0, void 0, function* () {
             yield database_1.db.conectarBD()
                 .then(() => __awaiter(this, void 0, void 0, function* () {
-                const doma = yield participantes_1.Participantes.find(
-                /*[
-                    {
-                        $match: {
-                            "_modalidad": 'doma'
-                        }
-                    }
-                ]*/
-                {
+                const doma = yield participantes_1.Participantes.find({
                     "_modalidad": "Doma"
                 });
                 res.json(doma);
+            }))
+                .catch((mensaje) => {
+                res.send(mensaje);
+            });
+            yield database_1.db.desconectarBD();
+        });
+        this.getSalto = (req, res) => __awaiter(this, void 0, void 0, function* () {
+            yield database_1.db.conectarBD()
+                .then(() => __awaiter(this, void 0, void 0, function* () {
+                const salto = yield participantes_1.Participantes.find({
+                    "_modalidad": "Salto"
+                });
+                res.json(salto);
+            }))
+                .catch((mensaje) => {
+                res.send(mensaje);
+            });
+            yield database_1.db.desconectarBD();
+        });
+        this.getCross = (req, res) => __awaiter(this, void 0, void 0, function* () {
+            yield database_1.db.conectarBD()
+                .then(() => __awaiter(this, void 0, void 0, function* () {
+                const cross = yield participantes_1.Participantes.find({
+                    "_modalidad": "Cross"
+                });
+                res.json(cross);
             }))
                 .catch((mensaje) => {
                 res.send(mensaje);
@@ -265,6 +283,8 @@ class DatoRoutes {
         this._router.get('/niveles/:tipoNivel', this.getNivel);
         this._router.get('/participante/:nombre', this.getParticipante);
         this._router.get('/doma', this.getDoma);
+        this._router.get('/salto', this.getSalto);
+        this._router.get('/cross', this.getCross);
         this._router.post('/nivel', this.newNivel);
         this._router.post('/participante', this.newParticipante);
         this._router.put('/modificarNivel/:id', this.modiNivel);
