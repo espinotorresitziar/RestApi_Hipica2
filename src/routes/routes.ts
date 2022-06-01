@@ -52,6 +52,7 @@ class DatoRoutes {
         db.desconectarBD()
     }
 
+
     private getNivel = async (req: Request, res: Response) => {
         const { tipoNivel } = req.params
         await db.conectarBD()
@@ -97,6 +98,26 @@ class DatoRoutes {
                 }
             )
             res.json(query)
+        })
+        .catch((mensaje) => {
+            res.send(mensaje)
+        })
+        await db.desconectarBD()
+    }
+
+    private getDoma = async (req: Request, res: Response) => {
+        await db.conectarBD()
+        .then(async () => {
+            const doma = await Participantes.aggregate(
+                [
+                    {
+                        $match: {
+                            "_modalidad": 'doma'
+                        }
+                    }
+                ]
+            )
+            res.json(doma)
         })
         .catch((mensaje) => {
             res.send(mensaje)
@@ -271,6 +292,7 @@ class DatoRoutes {
         this._router.get('/participantes', this.getParticipantes)
         this._router.get('/niveles/:tipoNivel', this.getNivel)
         this._router.get('/participante/:nombre', this.getParticipante)
+        this._router.get('/doma', this.getDoma)
         this._router.post('/nivel', this.newNivel)
         this._router.post('/participante', this.newParticipante)
         this._router.put('/modificarNivel/:id', this.modiNivel)

@@ -95,6 +95,23 @@ class DatoRoutes {
             });
             yield database_1.db.desconectarBD();
         });
+        this.getDoma = (req, res) => __awaiter(this, void 0, void 0, function* () {
+            yield database_1.db.conectarBD()
+                .then(() => __awaiter(this, void 0, void 0, function* () {
+                const doma = yield participantes_1.Participantes.aggregate([
+                    {
+                        $match: {
+                            "_modalidad": 'doma'
+                        }
+                    }
+                ]);
+                res.json(doma);
+            }))
+                .catch((mensaje) => {
+                res.send(mensaje);
+            });
+            yield database_1.db.desconectarBD();
+        });
         this.newNivel = (req, res) => __awaiter(this, void 0, void 0, function* () {
             const { id, tipoNivel, aficionado, limiteEdad, inscripcion } = req.body;
             yield database_1.db.conectarBD();
@@ -243,6 +260,7 @@ class DatoRoutes {
         this._router.get('/participantes', this.getParticipantes);
         this._router.get('/niveles/:tipoNivel', this.getNivel);
         this._router.get('/participante/:nombre', this.getParticipante);
+        this._router.get('/doma', this.getDoma);
         this._router.post('/nivel', this.newNivel);
         this._router.post('/participante', this.newParticipante);
         this._router.put('/modificarNivel/:id', this.modiNivel);
