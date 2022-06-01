@@ -101,7 +101,7 @@ class DatoRoutes {
                 const doma = yield participantes_1.Participantes.aggregate([
                     {
                         $match: {
-                            "_modalidad": 'doma'
+                            "_modalidad": 'Doma'
                         }
                     }
                 ]);

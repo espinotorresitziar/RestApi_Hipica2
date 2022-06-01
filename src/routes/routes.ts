@@ -112,7 +112,7 @@ class DatoRoutes {
                 [
                     {
                         $match: {
-                            "_modalidad": 'doma'
+                            "_modalidad": 'Doma'
                         }
                     }
                 ]
